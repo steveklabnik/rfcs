@@ -122,9 +122,6 @@ Rust code, annotate it with the proper name.
     puts "Hello"
     ````
 
-Rustdoc is able to test all Rust examples embedded inside of documentation, so
-it's important to mark what is not Rust so your tests don't fail.
-
 References and citation should be linked inline. Prefer
 
     [some paper](http://www.foo.edu/something.pdf)
@@ -134,6 +131,41 @@ to
    some paper[1]
 
    1: http://www.foo.edu/something.pdf
+
+## Testing embedded code
+
+Rustdoc is able to test all Rust examples embedded inside of documentation. This is why we encourage fully runnable examples, for example:
+
+    ```rust
+    fn main() {
+        println!("Hello Rust!");
+    }
+    ```
+
+Mark all `rust` examples as `rust`, as this eases work for third-party markdown parsers/highlighters.
+
+To further describe your code, you can use additional tags. Use the extended tag syntax for multiple tags:
+
+    ```{.rust .no_run}
+    fn main() {
+        // Some very expensive computation
+    }
+    ```
+
+Use the following tags to further refine things:
+
+* `should_fail`: Treat failure of the code snippet as success and vice versa.
+* `no_run`: Compile the snippet, but don't run, e.g. for costly operations.
+* `ignore`: Highlight as Rust, but otherwise ignore the full snippet
+* `test_harness`: Wrap tests in one module.
+
+It is important to mark what is not Rust so your tests don't fail. For example, shell code can be highlighted as:
+
+    ```sh
+    echo "Hello sh!"
+    ```
+
+There used to be a `notrust` flag, which is now discouraged.
 
 # Drawbacks
 
